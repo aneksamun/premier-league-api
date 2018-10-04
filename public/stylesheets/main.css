@@ -1,0 +1,25 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td {margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;}
+a {color:#80c846;} a:hover {color:#6dae38;}
+body {background:#f5f5f5;background:#fff;color:#555;font:15px "Chalkboard",sans-serif;padding:0 0 0;}
+table {border-collapse:collapse;border-spacing:0;}
+table th, td {padding: 5px;text-align:left;}
+table th {font-weight: bold;}
+table td {border-top: 2px solid #dfe1e5;}
+section {padding:50px 0;}
+#empty {text-align: center;width:960px}
+#empty p {padding:15px;font-size:24px;font-weight:bold;}
+#content {padding:30px 0;}
+#top {background:#80c846 url(/assets/images/header-pattern.png) fixed;box-shadow:0 -4px 0 rgba(0, 0, 0, 0.1) inset;padding:0;position:relative;}
+#top .wrapper {padding:30px 0;}
+#top h1 {float:left;color:#fff;font-size:33px;line-height:48px;text-shadow:2px 2px 0 rgba(0, 0, 0, 0.1);margin:8px 0 0 5px;}
+#top img {float:left}
+#navigation {padding:15px 0 0 0;width:762px;text-align:right}
+.disabled {pointer-events:none;text-decoration:none;cursor:default;opacity:0.5;}
+.wrapper {width:960px;margin:0 auto;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;padding:60px 0;}
+.wrapper:after {content:" ";display:block;clear:both;}
+.wrapper {width:960px;margin:0 auto;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;padding:60px 0;}
+.wrapper:after{content:" ";display:block;clear:both;}
+.wrapper article {min-height:310px;width:650px;float:left;}
+.team-column {min-width:500px;}
+.number-column {min-width:12px;}
+.position-column {min-width:20px;}

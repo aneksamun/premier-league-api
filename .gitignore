@@ -1,0 +1,7 @@
+### PlayFramework
+logs
+project/project
+target
+/.idea
+conf/data
+.DS_Store

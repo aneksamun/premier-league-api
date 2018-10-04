@@ -1,0 +1,14 @@
+# Routes
+# ~~~~
+
+# An endpoint for displaying Premier League table
+GET     /                           controllers.TableController.display(params: PagingParams)
+# An endpoint for retrieving Premier League teams standings
+GET     /table                      controllers.TableController.index(params: PagingParams)
+# An endpoint for retrieving game results for given week
+GET     /games/:week                controllers.GameController.index(week: Int)
+# An endpoint for storing football match
+POST    /games                      controllers.GameController.add
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

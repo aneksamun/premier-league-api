@@ -1,0 +1,94 @@
+[{
+  "$facet": {
+    "homeTeamStandings": [{
+      "$group": {
+        "_id": "$homeTeam",
+        "gamesPlayed": { "$sum": 1 },
+        "goalsFor": { "$sum": "$homeGoals" },
+        "goalsAgainst": { "$sum": "$awayGoals" },
+        "gamesWon": { "$sum": { "$cond": { "if": { "$gt": [ "$homeGoals", "$awayGoals" ] }, "then": 1, "else": 0 }}},
+        "gamesDrawn": { "$sum": { "$cond": { "if": { "$eq": [ "$homeGoals", "$awayGoals" ] }, "then": 1, "else": 0 }}},
+        "gamesLost": { "$sum": { "$cond": { "if": { "$lt": [ "$homeGoals", "$awayGoals" ] }, "then": 1, "else": 0 }}}
+      }
+    }, {
+      "$project": {
+        "team": "$_id",
+        "gamesPlayed": "$gamesPlayed",
+        "goalsFor": "$goalsFor",
+        "goalsAgainst": "$goalsAgainst",
+        "goalsDifference": { "$subtract": [ "$goalsFor", "$goalsAgainst" ]},
+        "gamesWon": "$gamesWon",
+        "gamesDrawn": "$gamesDrawn",
+        "gamesLost": "$gamesLost",
+        "points": { "$add": [{ "$multiply": [ "$gamesWon", 3 ] }, { "$multiply": [ "$gamesDrawn", 1 ] }]}
+      }
+    }],
+    "awayTeamStandings": [{
+      "$group": {
+        "_id": "$awayTeam",
+        "gamesPlayed": { "$sum": 1 },
+        "goalsFor": { "$sum": "$awayGoals" },
+        "goalsAgainst": { "$sum": "$homeGoals" },
+        "gamesWon": { "$sum": { "$cond": { "if": { "$gt": [ "$awayGoals", "$homeGoals" ] }, "then": 1, "else": 0 }}},
+        "gamesDrawn": { "$sum": { "$cond": { "if": { "$eq": [ "$awayGoals", "$homeGoals" ] }, "then": 1, "else": 0 }}},
+        "gamesLost": { "$sum": { "$cond": { "if": { "$lt": [ "$awayGoals", "$homeGoals" ] }, "then": 1, "else": 0 }}}
+      }
+    }, {
+      "$project": {
+        "team": "$_id",
+        "gamesPlayed": "$gamesPlayed",
+        "goalsFor": "$goalsFor",
+        "goalsAgainst": "$goalsAgainst",
+        "goalsDifference": { "$subtract": [ "$goalsFor", "$goalsAgainst" ] },
+        "gamesWon": "$gamesWon",
+        "gamesDrawn": "$gamesDrawn",
+        "gamesLost": "$gamesLost",
+        "points": { "$add": [{ "$multiply": [ "$gamesWon",3 ] }, { "$multiply": [ "$gamesDrawn",1 ] }]}
+      }
+    }]
+  }},
+  { "$project": { "standings": { "$concatArrays": [ "$homeTeamStandings", "$awayTeamStandings" ]}}},
+  { "$unwind": "$standings" },
+  { "$replaceRoot": { "newRoot": "$standings" }},
+  {
+    "$group": {
+      "_id": "$_id",
+      "gamesPlayed": { "$sum": "$gamesPlayed" },
+      "goalsFor": { "$sum": "$goalsFor" },
+      "goalsAgainst": { "$sum": "$goalsAgainst" },
+      "goalsDifference": { "$sum": "$goalsDifference" },
+      "gamesWon": { "$sum": "$gamesWon" },
+      "gamesDrawn": { "$sum": "$gamesDrawn" },
+      "gamesLost": { "$sum": "$gamesLost" },
+      "points": { "$sum": "$points" }
+    }
+  }, {
+    "$facet": {
+      "items": [
+        { "$sort": { "points": -1, "goalsDifference": -1 }},
+        { "$group": { "_id": null, "items": { "$push": "$$ROOT" } }},
+        { "$unwind": { "path": "$items", "includeArrayIndex": "position" }},
+        {
+          "$project": {
+            "team": "$items._id",
+            "gamesPlayed": "$items.gamesPlayed",
+            "goalsFor": "$items.goalsFor",
+            "goalsAgainst": "$items.goalsAgainst",
+            "goalsDifference": "$items.goalsDifference",
+            "gamesWon": "$items.gamesWon",
+            "gamesDrawn": "$items.gamesDrawn",
+            "gamesLost": "$items.gamesLost",
+            "points": "$items.points",
+            "position": { "$sum": [ "$position", 1] }
+          }
+        },
+        { "$skip": 0 },
+        { "$limit": 20 }
+      ],
+      "pageInfo": [{ "$group": { "_id": null, "total": { "$sum": 1 } }}]
+    }
+  },
+  { "$unwind": {"path": "$pageInfo" }},
+  { "$project": { "total": "$pageInfo.total", "items": "$items" }},
+  { "$addFields": { "offset": 1, "limit": 20 }}
+]

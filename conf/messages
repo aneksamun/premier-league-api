@@ -1,0 +1,19 @@
+# Validation
+error.required=Field is required
+error.min=Minimum allowed value is {0}
+error.max=Maximum allowed value is {0}
+
+# Views
+title=Premier League Table
+club=Club
+games.played=MD
+games.won=W
+games.drawn=D
+games.lost=L
+points=Pts
+next=Next
+previous=Previous
+goals.for=GF
+goals.against=GA
+goals.difference=GD
+empty=No data to show... :(

@@ -1,0 +1,54 @@
+@(page: Page[TeamStanding])(implicit messages: Messages)
+
+@import binders.PagingParams
+
+@renderLink(name: String, isDisabled: Boolean, params: () => PagingParams) = {
+    @if(isDisabled) {
+        <a href="#" class="disabled">@messages(name)</a>
+    } else {
+        <a href="@routes.TableController.display(params())">@messages(name)</a>
+    }
+}
+
+<div id="content" class="wrapper doc">
+    <article>
+    @if(page.items.isEmpty) {
+        <div id="empty">
+            <img src="@routes.Assets.versioned("images/referee.png")">
+            <p>@messages("empty")</p>
+        </div>
+    } else {
+        <table>
+            <tr>
+                <th colspan="2">@messages("club")</th>
+                <th>@messages("games.played")</th>
+                <th>@messages("games.won")</th>
+                <th>@messages("games.drawn")</th>
+                <th>@messages("games.lost")</th>
+                <th>@messages("goals.for")</th>
+                <th>@messages("goals.against")</th>
+                <th>@messages("goals.difference")</th>
+                <th>@messages("points")</th>
+            </tr>
+            @for(standing <- page.items) {
+                <tr>
+                    <td class="position-column">@standing.position</td>
+                    <td class="team-column">@standing.team</td>
+                    <td class="number-column">@standing.gamesPlayed</td>
+                    <td class="number-column">@standing.gamesWon</td>
+                    <td class="number-column">@standing.gamesDrawn</td>
+                    <td class="number-column">@standing.gamesLost</td>
+                    <td class="number-column">@standing.goalsFor</td>
+                    <td class="number-column">@standing.goalsAgainst</td>
+                    <td class="number-column">@standing.goalDifference</td>
+                    <td class="number-column">@standing.points</td>
+                </tr>
+            }
+        </table>
+        <div id="navigation">
+            @renderLink("previous", page.isFirst, () => PagingParams(page.offset - 1, page.limit))
+            @renderLink("next", page.isLast, () => PagingParams(page.offset + 1, page.limit))
+        </div>
+    }
+    </article>
+</div>
