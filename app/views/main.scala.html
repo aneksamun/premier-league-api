@@ -1,14 +1,16 @@
-@(title: String)(content: Html)
+@(content: Html)(implicit messages: Messages)
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.ico")">
-    </head>
-    <body>
-        @header(title)
-        @content
-    </body>
-</html>
+@defining(messages("title")) { title =>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <title>@title</title>
+            <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+            <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.ico")">
+        </head>
+        <body>
+            @header(title)
+            @content
+        </body>
+    </html>
+}

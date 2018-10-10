@@ -4,8 +4,9 @@ object JsonFormats {
 
   import play.api.libs.json._
 
-  implicit val footballMatchFormat: OFormat[FootballMatch] = Json.format[FootballMatch]
-  implicit val gameResultFormat: OFormat[GameResult] = Json.format[GameResult]
-  implicit val teamStandingFormat: OFormat[TeamStanding] = Json.format[TeamStanding]
-  implicit val pageFormat: OFormat[Page[TeamStanding]] = Json.format[Page[TeamStanding]]
+  implicit val gameResultFormatter: OFormat[GameResult] = Json.format[GameResult]
+  implicit val teamStandingFormatter: OFormat[TeamStanding] = Json.format[TeamStanding]
+  implicit val footballMatchFormatter: OFormat[FootballMatch] = Json.format[FootballMatch]
+  implicit val pageFormatter: OFormat[Page[TeamStanding]] = Json.format[Page[TeamStanding]]
+  implicit val errorResponseWriter: OWrites[ErrorResponse] = Json.writes[ErrorResponse]
 }

@@ -1,9 +1,11 @@
 # Validation
+# ~~~~
 error.required=Field is required
 error.min=Minimum allowed value is {0}
 error.max=Maximum allowed value is {0}
 
 # Views
+# ~~~~
 title=Premier League Table
 club=Club
 games.played=MD

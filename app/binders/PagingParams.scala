@@ -36,7 +36,7 @@ object PagingParams {
             case Invalid(errors) =>
               Some(Left(errors.zip(Seq(OffsetParamKey, LimitParamKey)).map {
                 case (ValidationError(_, value), param) => s"Minimum allowed value for $param parameter is $value"
-              }.mkString(", ")))
+              }.mkString("; ")))
           }
         case Failure(e) => Some(Left(s"Invalid paging parameters: ${e.getMessage}"))
       }

@@ -1,6 +1,6 @@
 package controllers
 
-import binders.PagingParams
+import binders.{ViewErrorAction, PagingParams}
 import javax.inject._
 import models.JsonFormats._
 import play.api.Configuration
@@ -26,6 +26,6 @@ class TableController @Inject()(cc: ControllerComponents, configuration: Configu
 
   def display(pagingParams: PagingParams) = Action.async { implicit request =>
     repository.getTable(pagingParams.offset, pagingParams.limit, victoryPoints, drawPoints)
-      .map { pagedTable => Ok(views.html.display(pagedTable)) }
+      .map { pagedTable => Ok(views.html.displayTable(pagedTable)) }
   }
 }
