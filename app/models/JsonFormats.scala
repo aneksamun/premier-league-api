@@ -8,5 +8,4 @@ object JsonFormats {
   implicit val teamStandingFormatter: OFormat[TeamStanding] = Json.format[TeamStanding]
   implicit val footballMatchFormatter: OFormat[FootballMatch] = Json.format[FootballMatch]
   implicit val pageFormatter: OFormat[Page[TeamStanding]] = Json.format[Page[TeamStanding]]
-  implicit val errorResponseWriter: OWrites[ErrorResponse] = Json.writes[ErrorResponse]
 }

@@ -14,15 +14,18 @@ import repositories.FootballMatchRepository
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class GameController @Inject()(cc: ControllerComponents, repository: FootballMatchRepository, api: MessagesApi, langs: Langs)
+class GameController @Inject()(cc: ControllerComponents,
+                               repository: FootballMatchRepository,
+                               messagesApi: MessagesApi,
+                               languages: Langs)
   extends AbstractController(cc) {
 
-  lazy implicit val lang: Lang = langs.availables.head
+  lazy implicit val lang: Lang = languages.availables.head
 
   implicit object FormErrorWrites extends Writes[FormError] {
     override def writes(error: FormError): JsValue = Json.obj(fields =
       "field" -> Json.toJson(error.key),
-      "error" -> Json.toJson(api(error.message, error.args.headOption.orNull))
+      "error" -> Json.toJson(messagesApi(error.message, error.args.headOption.orNull))
     )
   }
 

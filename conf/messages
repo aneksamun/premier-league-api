@@ -19,3 +19,4 @@ goals.for=GF
 goals.against=GA
 goals.difference=GD
 empty=No data to show... :(
+error.header=Sorry, an error occurred

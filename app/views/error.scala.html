@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
+@(details: Seq[String])(implicit messages: Messages)
 
-    </body>
-</html>
+<div id="content" class="wrapper doc">
+    <article id="error-article">
+        <p>@messages("error.header")</p>
+        <ul>
+            @for(detail <- details) {
+                <li>@detail</li>
+            }
+        </ul>
+        <img src="@routes.Assets.versioned("images/failure.png")">
+    </article>
+</div>

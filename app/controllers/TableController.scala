@@ -1,6 +1,6 @@
 package controllers
 
-import binders.{ViewErrorAction, PagingParams}
+import binders.PagingParams
 import javax.inject._
 import models.JsonFormats._
 import play.api.Configuration
@@ -12,7 +12,9 @@ import repositories.FootballMatchRepository
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class TableController @Inject()(cc: ControllerComponents, configuration: Configuration, repository: FootballMatchRepository)
+class TableController @Inject()(cc: ControllerComponents,
+                                configuration: Configuration,
+                                repository: FootballMatchRepository)
   extends AbstractController(cc)
     with I18nSupport {
 
@@ -26,6 +28,7 @@ class TableController @Inject()(cc: ControllerComponents, configuration: Configu
 
   def display(pagingParams: PagingParams) = Action.async { implicit request =>
     repository.getTable(pagingParams.offset, pagingParams.limit, victoryPoints, drawPoints)
-      .map { pagedTable => Ok(views.html.displayTable(pagedTable)) }
+      .map { pagedTable => Ok(views.html.renderTable(pagedTable)) }
   }
 }
+

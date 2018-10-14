@@ -6,14 +6,19 @@ table th, td {padding: 5px;text-align:left;}
 table th {font-weight: bold;}
 table td {border-top: 2px solid #dfe1e5;}
 section {padding:50px 0;}
-#empty {text-align: center;width:960px}
+#empty {text-align:center;width:960px;margin-top:20px}
 #empty p {padding:15px;font-size:24px;font-weight:bold;}
-#content {padding:30px 0;}
+#content {padding:10px 0;}
 #top {background:#80c846 url(/assets/images/header-pattern.png) fixed;box-shadow:0 -4px 0 rgba(0, 0, 0, 0.1) inset;padding:0;position:relative;}
 #top .wrapper {padding:30px 0;}
 #top h1 {float:left;color:#fff;font-size:33px;line-height:48px;text-shadow:2px 2px 0 rgba(0, 0, 0, 0.1);margin:8px 0 0 5px;}
-#top img {float:left}
-#navigation {padding:15px 0 0 0;width:762px;text-align:right}
+#top img {float:left;}
+#navigation {padding:15px 0 0 0;width:762px;text-align:right;}
+#error-article {margin:10px;}
+#error-article p {font-weight:bold;font-size:20px;}
+#error-article ul {list-style-type:square;padding:20px;}
+#error-article ul li {padding:3px;}
+#error-article img {max-width:360px;}
 .disabled {pointer-events:none;text-decoration:none;cursor:default;opacity:0.5;}
 .wrapper {width:960px;margin:0 auto;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;padding:60px 0;}
 .wrapper:after {content:" ";display:block;clear:both;}
@@ -23,3 +28,4 @@ section {padding:50px 0;}
 .team-column {min-width:500px;}
 .number-column {min-width:12px;}
 .position-column {min-width:20px;}
+
