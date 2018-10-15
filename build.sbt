@@ -6,9 +6,7 @@ name := "premier-league-api"
 version := "1.0"
 
 lazy val `premier-league-api` = (project in file("."))
-  .enablePlugins(PlayScala)
-  .enablePlugins(DockerPlugin)
-  .enablePlugins(AshScriptPlugin)
+  .enablePlugins(PlayScala, DockerPlugin, AshScriptPlugin)
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
@@ -20,7 +18,7 @@ libraryDependencies ++= Seq(
   guice,
   "org.reactivemongo" %% "play2-reactivemongo" % "0.16.0-play26",
   specs2 % Test
-) 
+)
 
 routesImport += "binders._"
 
@@ -36,6 +34,10 @@ dockerCommands ++= Seq(
   ExecCmd("RUN", "mkdir", s"/opt/docker/${packageName.value}"),
   ExecCmd("RUN", "mkdir", s"/opt/docker/${packageName.value}/run"),
   ExecCmd("RUN", "chown", "-R", "daemon:daemon", s"/opt/docker/${packageName.value}/")
+)
+
+bashScriptExtraDefines := List(
+  """addJava "-Duser.dir=$(realpath "$(cd "${app_home}/.."; pwd -P)")""""
 )
 
 dockerBaseImage := "openjdk:8u171-alpine3.8"
