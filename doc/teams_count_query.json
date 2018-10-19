@@ -1,0 +1,7 @@
+[
+  { "$project": { "items": ["$homeTeam", "$awayTeam"] }},
+  { "$unwind": "$items" },
+  { "$group": {  "_id": null, "teams": { "$addToSet": "$items" }}},
+  { "$unwind": "$teams" },
+  { "$group": {  "_id": null, "count": { "$sum": 1 }}}
+]

@@ -1,9 +1,16 @@
 import com.google.inject.AbstractModule
-import repositories.FootballMatchRepository
+import repositories.{FootballMatchMongoRepository, FootballMatchRepository}
+import services.{FootballMatchService, TableService}
 
 class Module extends AbstractModule {
 
   override def configure() = {
-    bind(classOf[FootballMatchRepository]).asEagerSingleton()
+    bind(classOf[FootballMatchRepository])
+      .to(classOf[FootballMatchMongoRepository])
+      .asEagerSingleton()
+
+    bind(classOf[FootballMatchService]).asEagerSingleton()
+
+    bind(classOf[TableService]).asEagerSingleton()
   }
 }

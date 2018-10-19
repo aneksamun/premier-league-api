@@ -62,33 +62,24 @@
       "gamesLost": { "$sum": "$gamesLost" },
       "points": { "$sum": "$points" }
     }
-  }, {
-    "$facet": {
-      "items": [
-        { "$sort": { "points": -1, "goalsDifference": -1 }},
-        { "$group": { "_id": null, "items": { "$push": "$$ROOT" } }},
-        { "$unwind": { "path": "$items", "includeArrayIndex": "position" }},
-        {
-          "$project": {
-            "team": "$items._id",
-            "gamesPlayed": "$items.gamesPlayed",
-            "goalsFor": "$items.goalsFor",
-            "goalsAgainst": "$items.goalsAgainst",
-            "goalsDifference": "$items.goalsDifference",
-            "gamesWon": "$items.gamesWon",
-            "gamesDrawn": "$items.gamesDrawn",
-            "gamesLost": "$items.gamesLost",
-            "points": "$items.points",
-            "position": { "$sum": [ "$position", 1] }
-          }
-        },
-        { "$skip": 0 },
-        { "$limit": 20 }
-      ],
-      "pageInfo": [{ "$group": { "_id": null, "total": { "$sum": 1 } }}]
+  },
+  { "$sort": { "points": -1, "goalsDifference": -1 }},
+  { "$group": { "_id": null, "items": { "$push": "$$ROOT" } }},
+  { "$unwind": { "path": "$items", "includeArrayIndex": "position" }},
+  {
+    "$project": {
+      "team": "$items._id",
+      "gamesPlayed": "$items.gamesPlayed",
+      "goalsFor": "$items.goalsFor",
+      "goalsAgainst": "$items.goalsAgainst",
+      "goalsDifference": "$items.goalsDifference",
+      "gamesWon": "$items.gamesWon",
+      "gamesDrawn": "$items.gamesDrawn",
+      "gamesLost": "$items.gamesLost",
+      "points": "$items.points",
+      "position": { "$sum": [ "$position", 1] }
     }
   },
-  { "$unwind": {"path": "$pageInfo" }},
-  { "$project": { "total": "$pageInfo.total", "items": "$items" }},
-  { "$addFields": { "offset": 1, "limit": 20 }}
+  { "$skip": 0 },
+  { "$limit": 20 }
 ]

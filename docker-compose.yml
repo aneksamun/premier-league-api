@@ -21,7 +21,7 @@ services:
       - 9000:9000
     environment:
       - MONGO_HOST=mongodb
-      - APPLICATION_SECRET=YG:H_ITIOb;boe=>KGvsHAsx=^qxJtx_c2CdKcd/A66@jw0/0l_5XGsDgpaAhe7
+      - APPLICATION_SECRET=${APPLICATION_SECRET:-YG:H_ITIOb;boe=>KGvsHAsx=^qxJtx_c2CdKcd/A66@jw0/0l_5XGsDgpaAhe7}
     restart: always
     depends_on:
       - mongodb

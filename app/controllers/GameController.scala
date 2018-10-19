@@ -9,13 +9,13 @@ import play.api.data.{Form, FormError}
 import play.api.i18n._
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc._
-import repositories.FootballMatchRepository
+import services.FootballMatchService
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
 class GameController @Inject()(cc: ControllerComponents,
-                               repository: FootballMatchRepository,
+                               footballMatchService: FootballMatchService,
                                messagesApi: MessagesApi,
                                languages: Langs)
   extends AbstractController(cc) {
@@ -40,8 +40,7 @@ class GameController @Inject()(cc: ControllerComponents,
   }
 
   def index(week: Int) = Action.async {
-    repository.findForWeek(week)
-      .map { _.map { _.result }}
+    footballMatchService.getResults(week)
       .map { results => Ok(Json.toJson(results)) }
   }
 
@@ -49,7 +48,7 @@ class GameController @Inject()(cc: ControllerComponents,
     footballMatchForm.bindFromRequest().fold(
       formWithErrors => BadRequest(Json.toJson(formWithErrors.errors)),
       footballMatch => {
-        repository.add(footballMatch)
+        footballMatchService.add(footballMatch)
         Created
       }
     )
