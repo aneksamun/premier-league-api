@@ -20,12 +20,14 @@ class ErrorHandler @Inject()(env: Environment,
   override def messagesApi: MessagesApi = api
 
   override def onBadRequest(request: RequestHeader, message: String): Future[Result] = {
+    Logger.error(message)
     val details = message.split(";")
     implicit val messages: Messages = request2Messages(request)
     Future.successful(BadRequest(views.html.renderError(details)))
   }
 
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
+    Logger.error(exception.toString)
     val details = Seq(exception.getMessage)
     implicit val messages: Messages = request2Messages(request)
     Future.successful(InternalServerError(views.html.renderError(details)))
