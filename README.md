@@ -74,11 +74,27 @@ The teams gets awarded with __3 points__ winning a game and with __1 point__ for
 
 ## Build instructions
 
+- Compile
+```
+sbt compile
+```
+- Build deployable binary
+```
+sbt dist
+```
+- Build a Docker image
+```
+sbt docker:publishLocal
+```
+- Run application and dependencies
+```
+docker-compose up -d
+```
 
 ## Web interface
-<sub><sup>Premier League Table</sub></sup>
+<sup>Premier League Table</sup>
 ![table](doc/images/table.png?raw=true "Premier League Table")
-<sub><sup>No content page</sub></sup> 
+<sup>No content page</sup> 
 ![nothing](doc/images/nothing.png?raw=true "Nothing to show")
-<sub><sup>Error page</sub></sup>
+<sup>Error page</sup>
 ![error](doc/images/error.png?raw=true "Error page")
