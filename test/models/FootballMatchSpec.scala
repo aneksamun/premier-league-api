@@ -2,8 +2,7 @@ package models
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class FootballMatchSpec extends FlatSpec
-  with Matchers {
+class FootballMatchSpec extends FlatSpec with Matchers {
 
   "Football match between teams with the same goals count" should "be draw" in {
     FootballMatch(

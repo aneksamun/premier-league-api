@@ -3,9 +3,7 @@ package models
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{Matchers, PropSpec}
 
-class PageSpec extends PropSpec
-  with TableDrivenPropertyChecks
-    with Matchers {
+class PageSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
 
   val firstPages = Table(
     "First pages",
