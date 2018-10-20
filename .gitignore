@@ -4,5 +4,4 @@ project/project
 target
 data
 /.idea
-conf/data
 .DS_Store

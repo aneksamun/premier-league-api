@@ -13,7 +13,7 @@ class PageSpec extends PropSpec
       offset = 1,
       limit = 1,
       total = 2,
-      items = List("First", "Second")
+      items = Seq("First", "Second")
     )
   )
 
@@ -23,13 +23,19 @@ class PageSpec extends PropSpec
       offset = 2,
       limit = 2,
       total = 4,
-      items = List("First", "Second", "Third", "Fourth")
+      items = Seq("First", "Second", "Third", "Fourth")
     ),
     Page[String](
       offset = 2,
       limit = 10,
       total = 4,
-      items = List("First", "Second", "Third", "Fourth")
+      items = Seq("First", "Second", "Third", "Fourth")
+    ),
+    Page[String](
+      offset = 3,
+      limit = 2,
+      total = 5,
+      items = Seq("First", "Second", "Third")
     )
   )
 
