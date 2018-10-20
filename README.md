@@ -78,7 +78,7 @@ The teams gets awarded with __3 points__ winning a game and with __1 point__ for
 ## Web interface
 <sub><sup>Premier League Table</sub></sup>
 ![table](doc/images/table.png?raw=true "Premier League Table")
-No content page
+<sub><sup>No content page</sub></sup> 
 ![nothing](doc/images/nothing.png?raw=true "Nothing to show")
-Error page
+<sub><sup>Error page</sub></sup>
 ![error](doc/images/error.png?raw=true "Error page")
