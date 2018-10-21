@@ -21,9 +21,9 @@ To save a football match data must be present in following format:
     "awayGoals": 1
   }
 ```
-Game week suppose to be between 1 and 38.   
+The game week suppose to be between 1 and 38.   
 
-Game resuts are ordered alphabetically by home team. If not games have been POSTed for a specified game week, an empty array is returned.
+The game resuts are ordered alphabetically by home team. If not games have been POSTed for a specified game week, an empty array is returned.
 ```json
 [
     {
@@ -36,7 +36,7 @@ Game resuts are ordered alphabetically by home team. If not games have been POST
 ]
 ```   
 
-Table is paged therefore __offset__ and __limit__ can be included in query string, for example, `localhost:9000\table?offset=1&limit=10`. Default values is 1 for offset and 20 for limit.   
+The table is paged therefore __offset__ and __limit__ can be included in query string, for example, `localhost:9000\table?offset=1&limit=10`. Default values is 1 for offset and 20 for limit.   
 The teams gets awarded with __3 points__ winning a game and with __1 point__ for draw.  
 ```json
 {
