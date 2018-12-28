@@ -8,7 +8,7 @@ An API for determining teams standings within Premier League Table.
 | Path         | Method | Response | Details                                 |
 | ------------ | ------ | -------- | --------------------------------------- |
 | /games       | POST   | 201/400  | Stores a football match to the database |
-| /games/:week | GET    | 200      | Retrieves game resuts for given week    |
+| /games/:week | GET    | 200      | Retrieves game results for given week   |
 | /table       | GET    | 200      | Calculates team standings               |
 
 To save a football match data must be present in following format:
