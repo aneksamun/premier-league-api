@@ -3,34 +3,30 @@ package integration
 import com.whisk.docker.impl.spotify.DockerKitSpotify
 import com.whisk.docker.scalatest.DockerTestKit
 import org.scalatestplus.play.PlaySpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 
-class PremierLeagueTable extends PlaySpec with GuiceOneAppPerSuite
+class PremierLeagueTable extends PlaySpec with GuiceOneServerPerSuite
   with DockerTestKit with DockerKitSpotify
     with MongoDbContainer {
 
-  // https://github.com/ReactiveMongo/Play-ReactiveMongo/blob/master/src/test/scala/PlaySpec.scala
-
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .load(
-        new play.api.i18n.I18nModule,
-        new play.api.mvc.CookiesModule,
-        new play.api.inject.BuiltinModule,
-        new play.modules.reactivemongo.ReactiveMongoModule
-      )
-      .configure(Map("mongodb.uri" -> s"mongodb://localhost:$MongoDbPort/football-db"))
-      .build()
+  override def fakeApplication(): Application = new GuiceApplicationBuilder()
+    .configure(Map(
+      "play.http.filters" -> "play.api.http.NoHttpFilters",
+      "mongodb.uri" -> mongoUri()
+    ))
+    .build()
 
   "The Premier League API " must {
     "retrieve game results for given week" in {
+      containerManager.isReady(mongodbContainer).isCompleted mustBe true
+
       val week = 1
       val client = app.injector.instanceOf[WSClient]
-      val callbackUrl = s"http://localhost:$testServerPort/games/$week"
+      val callbackUrl = s"http://localhost:$port/games/$week"
 
       val response = await(client.url(callbackUrl).get())
 
@@ -38,4 +34,3 @@ class PremierLeagueTable extends PlaySpec with GuiceOneAppPerSuite
     }
   }
 }
-
