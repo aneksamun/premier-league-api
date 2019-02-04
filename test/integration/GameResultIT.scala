@@ -20,7 +20,7 @@ class GameResultIT extends BaseIT {
     }
   }
 
-  it must {
+  "The user " must {
     "retrieve game results for given week in sorted order by home team" in {
       val week = 1
       val requests = Vector(
