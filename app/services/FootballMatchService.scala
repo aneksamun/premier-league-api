@@ -5,8 +5,8 @@ import models.{FootballMatch, GameResult}
 import reactivemongo.api.commands.WriteResult
 import repositories.FootballMatchRepository
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 @Singleton
 class FootballMatchService @Inject()(footballMatchRepository: FootballMatchRepository) {

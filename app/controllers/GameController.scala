@@ -11,7 +11,9 @@ import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc._
 import services.FootballMatchService
 
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 
 @Singleton
 class GameController @Inject()(cc: ControllerComponents,
@@ -48,7 +50,7 @@ class GameController @Inject()(cc: ControllerComponents,
     footballMatchForm.bindFromRequest().fold(
       formWithErrors => BadRequest(Json.toJson(formWithErrors.errors)),
       footballMatch => {
-        footballMatchService.add(footballMatch)
+        Await.result(footballMatchService add footballMatch, 5 seconds)
         Created
       }
     )

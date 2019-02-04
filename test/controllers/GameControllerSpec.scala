@@ -1,6 +1,7 @@
 package controllers
 
-import models.GameResult
+import models.{FootballMatch, GameResult}
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.prop.TableDrivenPropertyChecks
@@ -10,6 +11,7 @@ import play.api.libs.json.{JsNull, Json}
 import play.api.mvc.Results
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import reactivemongo.api.commands.UpdateWriteResult
 import services.FootballMatchService
 
 import scala.concurrent.Future
@@ -60,6 +62,10 @@ class GameControllerSpec extends PlaySpec with Results with MockitoSugar with Ta
       footballMatchService,
       stubMessagesApi(),
       stubLangs()
+    )
+
+    when(footballMatchService add any[FootballMatch]) thenReturn Future.successful(
+      UpdateWriteResult(ok = true, 1, 1, Nil, Nil, None, None, None)
     )
 
     status(

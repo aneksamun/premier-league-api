@@ -1,8 +1,7 @@
 package integration
 
-import com.fasterxml.jackson.annotation.JsonValue
-import com.google.gson.JsonArray
 import play.api.libs.json.Json
+import play.api.libs.ws.WSResponse
 import play.api.test.Helpers._
 
 class GameResultIT extends BaseIT {
@@ -22,7 +21,7 @@ class GameResultIT extends BaseIT {
   }
 
   it must {
-    "retrieve game results for given week" in {
+    "retrieve game results for given week in sorted order by home team" in {
       val week = 1
       val requests = Vector(
         Json.obj(fields =
@@ -30,7 +29,7 @@ class GameResultIT extends BaseIT {
           "homeTeam" -> "Chelsea",
           "awayTeam" -> "Manchester United",
           "homeGoals" -> 3,
-          "awayGoals" -> 2
+          "awayGoals" -> 4
         ),
         Json.obj(fields =
           "gameWeek" -> week,
@@ -41,16 +40,24 @@ class GameResultIT extends BaseIT {
         )
       )
 
-      requests takeWhile { request => await(client.url(AddGameUrl) post request).status equals CREATED }
+      requests foreach { request => await(client.url(AddGameUrl) post request) }
 
       val callbackUrl: String = GetGamesUrl.withArgs(Array(week))
-      val response = await(client.url(callbackUrl).get())
+      val response: WSResponse = await(client.url(callbackUrl).get())
 
       response.status mustBe OK
 
-      response.json(0)
-      response.json(1)
+      (response.json(0) \ "homeTeam").as[String] mustBe (requests(1) \ "homeTeam").as[String]
+      (response.json(0) \ "awayTeam").as[String] mustBe (requests(1) \ "awayTeam").as[String]
+      (response.json(0) \ "homeGoals").as[Int] mustBe (requests(1) \ "homeGoals").as[Int]
+      (response.json(0) \ "awayGoals").as[Int] mustBe (requests(1) \ "awayGoals").as[Int]
+      (response.json(0) \ "result").as[String] mustBe "Home Win"
+
+      (response.json(1) \ "homeTeam").as[String] mustBe (requests(0) \ "homeTeam").as[String]
+      (response.json(1) \ "awayTeam").as[String] mustBe (requests(0) \ "awayTeam").as[String]
+      (response.json(1) \ "homeGoals").as[Int] mustBe (requests(0) \ "homeGoals").as[Int]
+      (response.json(1) \ "awayGoals").as[Int] mustBe (requests(0) \ "awayGoals").as[Int]
+      (response.json(1) \ "result").as[String] mustBe "Away Win"
     }
   }
 }
-
