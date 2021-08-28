@@ -4,7 +4,8 @@ import services.{FootballMatchService, TableService}
 
 class Module extends AbstractModule {
 
-  override def configure() = {
+  override def configure(): Unit = {
+
     bind(classOf[FootballMatchRepository])
       .to(classOf[FootballMatchMongoRepository])
       .asEagerSingleton()

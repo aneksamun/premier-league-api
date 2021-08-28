@@ -15,6 +15,5 @@ class FootballMatchService @Inject()(footballMatchRepository: FootballMatchRepos
     footballMatchRepository add footballMatch
 
   def getResults(week: Int): Future[Seq[GameResult]] =
-    footballMatchRepository.findForWeek(week)
-      .map { _.map { _.result } }
+    footballMatchRepository.findForWeek(week).map { _.map { _.result } }
 }

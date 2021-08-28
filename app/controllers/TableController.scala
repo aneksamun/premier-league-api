@@ -16,12 +16,14 @@ class TableController @Inject()(cc: ControllerComponents, tableService: TableSer
     with I18nSupport {
 
   def index(pagingParams: PagingParams) = Action.async {
-    tableService.getTable(pagingParams.offset, pagingParams.limit)
-      .map { pagedTable => Ok(Json.toJson(pagedTable)) }
+    tableService.getTable(pagingParams.offset, pagingParams.limit).map { pagedTable =>
+      Ok(Json.toJson(pagedTable))
+    }
   }
 
   def display(pagingParams: PagingParams) = Action.async { implicit request =>
-    tableService.getTable(pagingParams.offset, pagingParams.limit)
-      .map { pagedTable => Ok(views.html.renderTable(pagedTable)) }
+    tableService.getTable(pagingParams.offset, pagingParams.limit).map { pagedTable =>
+      Ok(views.html.renderTable(pagedTable))
+    }
   }
 }

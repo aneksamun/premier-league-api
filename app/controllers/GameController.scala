@@ -1,6 +1,5 @@
 package controllers
 
-import javax.inject._
 import models.FootballMatch
 import models.JsonFormats._
 import play.api.data.Forms._
@@ -11,16 +10,15 @@ import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc._
 import services.FootballMatchService
 
-import scala.concurrent.Await
+import javax.inject._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
+import scala.concurrent.Future
 
 @Singleton
 class GameController @Inject()(cc: ControllerComponents,
                                footballMatchService: FootballMatchService,
                                messagesApi: MessagesApi,
-                               languages: Langs)
-  extends AbstractController(cc) {
+                               languages: Langs) extends AbstractController(cc) {
 
   lazy implicit val lang: Lang = languages.availables.head
 
@@ -46,12 +44,13 @@ class GameController @Inject()(cc: ControllerComponents,
       .map { results => Ok(Json.toJson(results)) }
   }
 
-  def add = Action { implicit request =>
+  def add = Action.async { implicit request =>
     footballMatchForm.bindFromRequest().fold(
-      formWithErrors => BadRequest(Json.toJson(formWithErrors.errors)),
+      formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors))),
       footballMatch => {
-        Await.result(footballMatchService add footballMatch, 5 seconds)
-        Created
+        footballMatchService.add(footballMatch).map { _ =>
+          Created
+        }
       }
     )
   }
